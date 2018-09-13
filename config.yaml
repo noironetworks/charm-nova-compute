@@ -429,4 +429,22 @@ options:
       an unmount of the corresponding device so that it can be used for as the
       backing store for local instances.  This is useful for testing purposes
       (cloud deployment is not a typical use case).
+  aci-repo:
+    type: string
+    default: 
+    description: "Apt repository for ACI module, example deb http://a.b.c.d"
+  aci-repo-key:
+    type: string
+    default:
+    description: "Repo key, if missing no package authentication will be performed"
+  enable-sriov-nic-selection:
+    type: boolean
+    default: False
+    description: |
+      When compute hosts are configured with SRIOV NICs, setting
+      this parameter to True allows users to select which SRIOV NIC
+      is used for an instance. Selection of SRIOV NICs is done using  the
+      pci_passthrough_whitelist map configured on compute hosts,
+      along with the binding:profile physical_network attribute when
+      creating the port for the NIC in neutron.
 

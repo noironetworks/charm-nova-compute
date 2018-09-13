@@ -138,8 +138,23 @@ def install():
     configure_installation_source(config('openstack-origin'))
 
     status_set('maintenance', 'Installing apt packages')
+ 
+    opt = ['--option=Dpkg::Options::=--force-confdef' ,'--option=Dpkg::Options::=--force-confold']
+    if config('aci-repo'):
+       if config('aci-repo-key'):
+           add_source(config('aci-repo'), key=config('aci-repo-key'))
+       else:
+           add_source(config('aci-repo'))
+           opt.append('--allow-unauthenticated')
+    
     apt_update()
-    apt_install(determine_packages(), fatal=True)
+
+    packages = determine_packages()
+
+    if config('enable-sriov-nic-selection'):
+        packages.append('python-nova-sriov-nics')
+
+    apt_install(packages, options=opt, fatal=True)
 
 
 @hooks.hook('config-changed')

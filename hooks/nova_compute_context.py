@@ -230,6 +230,10 @@ class NovaComputeLibvirtContext(context.OSContextGenerator):
             ctxt['pci_passthrough_whitelist'] = \
                 config('pci-passthrough-whitelist')
 
+        if config('enable-sriov-nic-selection'):
+            ctxt['enable_sriov_nic_selection'] = \
+                config('enable-sriov-nic-selection')
+
         if config('pci-alias'):
             ctxt['pci_alias'] = config('pci-alias')
 
